@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+	<meta charset="UTF-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>Audio YouTube iOS compatibile</title>
+	<style>
+		body {
+			font-family: system-ui, sans-serif;
+			text-align: center;
+			padding: 2em;
+		}
+		.button-list {
+			display: flex;
+			flex-direction: column;
+			gap: 1em;
+			max-width: 300px;
+			margin: 0 auto;
+		}
+		button {
+			font-size: 1.3em;
+			padding: 1em 2em;
+			cursor: pointer;
+			border: none;
+			border-radius: 10px;
+			background-color: #4caf50;
+			color: white;
+			transition: background-color 0.3s;
+			width: 100%;
+		}
+		button:hover {
+			background-color: #50a021;
+		}
+		#player {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			opacity: 0;
+			pointer-events: none;
+		}
+	</style>
+</head>
+<body>
+
+	<h1>IL PALLIDO MECENATE</h1>
+
+	<div class="button-list">
+		<button onclick="playAudio('roMz1PPslbM')">Intro</button>
+		<button onclick="playAudio('m0Tve24ezNQ')">Dentro la Villa</button>
+		<button onclick="playAudio('Kuz25aqfGAw')">L'alchimista</button>
+		<button onclick="playAudio('tvTsUs0n9zw')">Foresta Oscura</button>
+		<button onclick="playAudio('UJ4e4XVQQcY')">Grotta</button>
+		<button onclick="playAudio('H8n7K3jABhI')">Fight</button>
+		<button onclick="playAudio('amwA16ye148')">Villaggio</button>
+		<button onclick="playAudio('b1DUhonNQXM')">Taverna appena entrati</button>
+		<button onclick="playAudio('_P2O9ZXpKD8')">Taverna</button>
+		<button onclick="playAudio('vdTD0BIKsMQ')">Nuova giornata</button>
+		<button onclick="stopAudio()">⏹ Stop</button>
+	</div>
+
+	<div id="player"></div>
+	
+	<script src="https://www.youtube.com/iframe_api"></script>
+	<script>
+		let player;
+		
+		function onYouTubeIframeAPIReady() {
+			player = new YT.Player('player', {
+				height: '1',
+				width: '1',
+				videoId: '',
+				playerVars: {
+					autoplay: 0,
+					controls: 0,
+					modestbranding: 1,
+					rel: 0,
+					mute: 1 // inizialmente muto
+				}
+			});
+		}
+
+		function playAudio(videoId) {
+			if (!player) return;
+			player.loadVideoById(videoId);
+			player.mute(); // imposta muto (utile per sicurezza)
+			player.playVideo();
+
+			// Importante: togli il muto *subito* dopo play (senza delay)
+			player.unMute();
+		}
+
+		function stopAudio() {
+			if (player) {
+				player.stopVideo();
+			}
+		}
+	</script>
+
+</body>
+</html>
